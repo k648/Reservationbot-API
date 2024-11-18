@@ -1,9 +1,7 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router(); // Add parentheses here
-const auth = require('../middleware/authentication')
-const cancelledReservationController = require('../controller/cancelledReservation')
-
-
+const auth = require("../middleware/authentication");
+const cancelledReservationController = require("../controller/cancelledReservation");
 
 /**
  * @swagger
@@ -85,9 +83,15 @@ const cancelledReservationController = require('../controller/cancelledReservati
  *         description: Internal server error
  */
 
+router.get(
+  "/cancelled-reservation",
+  auth,
+  cancelledReservationController.getAllCancelledReservations,
+);
+router.get(
+  "/cancelled-reservation/:name",
+  auth,
+  cancelledReservationController.getCancelledReservation,
+);
 
-
-router.get('/cancelled-reservation',auth, cancelledReservationController.getAllCancelledReservations)
-router.get('/cancelled-reservation/:name',auth,cancelledReservationController.getCancelledReservation)
-
-module.exports = router
+module.exports = router;

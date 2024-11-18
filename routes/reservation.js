@@ -1,7 +1,7 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router(); // Add parentheses here
-const auth = require('../middleware/authentication')
-const reservationController = require('../controller/reservation')
+const auth = require("../middleware/authentication");
+const reservationController = require("../controller/reservation");
 
 /**
  * @swagger
@@ -76,7 +76,6 @@ const reservationController = require('../controller/reservation')
  *         description: Internal server error
  */
 
-
 /**
  * @swagger
  * /api/v1/reservation/{id}:
@@ -100,6 +99,10 @@ const reservationController = require('../controller/reservation')
  *               status:
  *                 type: string
  *                 example: confirmed
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
  *               # Define other properties that can be updated
  *     responses:
  *       200:
@@ -112,6 +115,9 @@ const reservationController = require('../controller/reservation')
  *                 status:
  *                   type: string
  *                   example: confirmed
+ *                 email:
+ *                   type: string
+ *                   example: user@example.com
  *                 # Add more properties as needed for the updated reservation
  *       404:
  *         description: Reservation not found
@@ -129,10 +135,8 @@ const reservationController = require('../controller/reservation')
  *         description: Internal server error
  */
 
+router.get("/reservation", auth, reservationController.getAllReservation);
+router.get("/reservation/:name", auth, reservationController.getReservation);
+router.patch("/reservation/:id", auth, reservationController.updateReservation);
 
-
-router.get('/reservation' , auth, reservationController.getAllReservation)
-router.get('/reservation/:name', auth ,reservationController.getReservation)
-router.patch('/reservation/:id', auth, reservationController.updateReservation)
-
-module.exports = router
+module.exports = router;

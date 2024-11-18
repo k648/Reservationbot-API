@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 /**
  * @swagger
@@ -38,7 +37,6 @@ const mongoose = require('mongoose');
  *           example: "Cancelled due to personal reasons"
  */
 
-
 const cancelledReservationSchema = new mongoose.Schema({
   phoneNumber: { type: String },
   step: { type: Number, default: 0 },
@@ -46,8 +44,11 @@ const cancelledReservationSchema = new mongoose.Schema({
   checkInDate: String,
   suite: String,
   nights: Number,
-  comment: String
+  comment: String,
 });
 
 // Remove the period at the end of the model name
-module.exports = mongoose.model('CancelledReservation', cancelledReservationSchema);
+module.exports = mongoose.model(
+  "CancelledReservation",
+  cancelledReservationSchema,
+);

@@ -1,45 +1,36 @@
-
-const User = require('../model/User')
+const User = require("../model/User");
 
 const authorizeUser = (...requiredRoles) => {
-
   return async (req, res, next) => {
-
     try {
       // Assuming `req.user` is populated by previous middleware (e.g., authentication)
       const userId = req.user.userId;
-      
+
       if (!userId) {
-        
-        return res.status(401).send('Unauthorized: User ID is missing');
+        return res.status(401).send("Unauthorized: User ID is missing");
       }
 
       // Fetch the user's role from the database
-      const user = await User.findById(userId).select('role'); 
+      const user = await User.findById(userId).select("role");
 
       if (!user) {
-        return res.status(404).send('User not found');
+        return res.status(404).send("User not found");
       }
 
-      const userRole = user.role; 
+      const userRole = user.role;
 
       // Check if the user's role is included in the list of required roles
       if (!requiredRoles.includes(userRole)) {
-        return res.status(403).send('Access Denied: Insufficient permission ');
+        return res.status(403).send("Access Denied: Insufficient permission ");
       }
 
-    
       next();
-
     } catch (error) {
       // Handle errors (e.g., database errors)
-      console.error('Authorization error:', error);
-      res.status(500).send('Internal Server Error');
+      console.error("Authorization error:", error);
+      res.status(500).send("Internal Server Error");
     }
   };
 };
 
-
-
-
-module.exports  =  authorizeUser
+module.exports = authorizeUser;

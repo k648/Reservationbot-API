@@ -1,60 +1,57 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide name'],
+    required: [true, "Please provide name"],
     maxlength: 50,
     minlength: 3,
   },
   email: {
     type: String,
-    required: [true, 'Please provide email'],
+    required: [true, "Please provide email"],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Please provide a valid email',
+      "Please provide a valid email",
     ],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, 'Please provide password'],
+    required: [true, "Please provide password"],
     minlength: 6,
   },
   role: {
     type: String,
-    required: [true, 'Please provide role'],
-    enum: ['user','admin','superAdmin'],
-    default: 'user'
+    required: [true, "Please provide role"],
+    enum: ["user", "admin", "superAdmin"],
+    default: "user",
   },
   resetToken: { type: String, default: null },
-  resetTokenExpiration: { type: Date, default: null }
-})
+  resetTokenExpiration: { type: Date, default: null },
+});
 
-UserSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
+UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-  
-  UserSchema.methods.createJWT = function () {
-    return jwt.sign(
-      { userId: this._id, name: this.name, role: this.role,email:this.email},
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '1d',
-      }
-    )
-  }
-  
-  UserSchema.methods.comparePassword = async function (candidatePassword) {
-    const isMatch = await bcrypt.compare(candidatePassword, this.password);
-    return isMatch;
+UserSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { userId: this._id, name: this.name, role: this.role, email: this.email },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
+    },
+  );
 };
 
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  return isMatch;
+};
 
-module.exports = mongoose.model('User', UserSchema)
-
+module.exports = mongoose.model("User", UserSchema);

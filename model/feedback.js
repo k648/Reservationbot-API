@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 /**
  * @swagger
@@ -21,15 +21,11 @@ const mongoose = require('mongoose');
  *           example: "+1234567890"
  */
 
-
-
 // Define the schema for user feedback
 const feedbackSchema = new mongoose.Schema({
   name: String,
   comment: String,
   phone: String,
-
 });
 
-
-module.exports = mongoose.model('Feedback', feedbackSchema);
+module.exports = mongoose.model("Feedback", feedbackSchema);

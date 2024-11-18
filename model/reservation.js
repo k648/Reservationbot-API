@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 /**
  * @swagger
@@ -42,7 +42,6 @@ const mongoose = require('mongoose');
  *           default: pending
  */
 
-
 const sessionSchema = new mongoose.Schema({
   phoneNumber: { type: String },
   step: { type: Number, default: 0 },
@@ -51,11 +50,11 @@ const sessionSchema = new mongoose.Schema({
   suite: String,
   nights: Number,
   comment: String,
-  status : {
-    type : String,
-    enum : ['pending','confirmed'],
-    default : 'pending',
-  }
+  status: {
+    type: String,
+    enum: ["pending", "confirmed"],
+    default: "pending",
+  },
 });
 
-module.exports = mongoose.model('Session', sessionSchema);
+module.exports = mongoose.model("Session", sessionSchema);

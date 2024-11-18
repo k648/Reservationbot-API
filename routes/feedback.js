@@ -1,9 +1,8 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router(); // Add parentheses here
-const authorizeUser = require('../middleware/authRole')
-const feedbackController = require('../controller/feedback')
-const auth = require('../middleware/authentication')
-
+const authorizeUser = require("../middleware/authRole");
+const feedbackController = require("../controller/feedback");
+const auth = require("../middleware/authentication");
 
 /**
  * @swagger
@@ -80,8 +79,15 @@ const auth = require('../middleware/authentication')
  *         description: Internal server error
  */
 
+router.get("/feedbacks", auth, feedbackController.getAllFeedbacks);
+router.get(
+  "/feedback/:name",
+  auth,
+  
+  feedbackController.getFeedback,
+);
 
-router.get('/feedbacks' ,auth, feedbackController.getAllFeedbacks)
-router.get('/feedback/:name',auth,authorizeUser('admin','superAdmin'),feedbackController.getFeedback)
+module.exports = router;
 
-module.exports = router
+
+//authorizeUser("admin", "superAdmin"),

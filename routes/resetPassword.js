@@ -1,14 +1,15 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router(); // Add parentheses here
-const resetPasswordController = require('../controller/resetPassword')
-const rateLimit = require('express-rate-limit');
+const resetPasswordController = require("../controller/resetPassword");
+const rateLimit = require("express-rate-limit");
 
 // Rate limiter for password reset requests
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limit each IP to 5 requests per windowMs
-    message: 'Too many password reset requests from this IP, please try again later.',
-  });
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message:
+    "Too many password reset requests from this IP, please try again later.",
+});
 
 /**
  * @swagger
@@ -52,15 +53,10 @@ const limiter = rateLimit({
  *         description: Internal server error
  */
 
+router.post(
+  "/request-password-reset",
+  limiter,
+  resetPasswordController.requestPasswordReset,
+);
 
-
-
-
-
-
-
-router.post('/request-password-reset',limiter,resetPasswordController.requestPasswordReset)
-
-
-
-module.exports = router
+module.exports = router;

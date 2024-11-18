@@ -1,14 +1,14 @@
-const express = require('express')
+const express = require("express");
 
-const router  = express.Router()
+const router = express.Router();
 
-const {register,login} = require('../controller/auth')
+const { register, login } = require("../controller/auth");
 
 /**
  * @swagger
  * /api/v1/register:
  *   post:
- *     summary: 
+ *     summary:
  *     description: Creates a new user and returns a JWT token.
  *     requestBody:
  *       required: true
@@ -55,7 +55,7 @@ const {register,login} = require('../controller/auth')
  * @swagger
  * /api/v1/login:
  *   post:
- *     summary: 
+ *     summary:
  *     description: Authenticates a user and returns a JWT token.
  *     requestBody:
  *       required: true
@@ -99,11 +99,7 @@ const {register,login} = require('../controller/auth')
  *         description: Internal server error
  */
 
-  
-  
-router.post('/register', register)
-router.post('/login', login)
+router.post("/register", register);
+router.post("/login", login);
 
-
-
-module.exports = router
+module.exports = router;
